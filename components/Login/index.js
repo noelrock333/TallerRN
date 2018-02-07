@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, Button, TextInput, Alert } from 'react-native';
-import Home from '../Home';
-import { StackNavigator } from 'react-navigation';
 
 class Login extends React.Component {
   state = {
@@ -35,19 +33,4 @@ class Login extends React.Component {
   }
 }
 
-const RootStack = StackNavigator(
-  {
-    Login: {
-      screen: Login,
-    },
-    Home: {
-      screen: Home,
-    },
-  },
-  {
-    initialRouteName: 'Login',
-  }
-);
-
-
-export default RootStack;
+export default Login;
