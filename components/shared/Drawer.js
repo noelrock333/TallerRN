@@ -11,6 +11,9 @@ class Drawer extends React.Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('MyProfile')}>
           <Text>Mi Perfil</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.screenProps.logout()}>
+          <Text>Cerrar sesión</Text>
+        </TouchableOpacity>
       </View>
     );
   }

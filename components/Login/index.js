@@ -9,7 +9,13 @@ class Login extends React.Component {
 
   login = () => {
     const { username, password } = this.state;
-    this.props.screenProps.login();
+    const useraccount = {
+      "auth": {
+          "email": "noel@michelada.io",
+          "password": "12345678"
+      }
+    };
+    this.props.screenProps.login(useraccount);
   };
 
   render() {

@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
+import SInfo from 'react-native-sensitive-info';
+
 import ExternalStack from './routes/ExternalStack';
 import InternalStack from './routes/InternalStack';
+
+import Api from './utils/api';
+
+const options = {
+  sharedPreferencesName: 'tallerRN',
+  keychainService: 'tallerRN'
+};
 
 export default class App extends Component {
   state = {
@@ -9,29 +18,47 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    AsyncStorage.getItem('isLoged', res => {
-      let isLoged = res;
+    const jwt = SInfo.getItem('jwt', options).then(value => {
+      console.log(value);
       this.setState({
-        isLoged: isLoged == '1' ? true : false
+        isLoged: value ? true : false
       });
     });
-  }
+  };
 
-  login = () => {
-    // AsyncStorage.
+  login = useraccount => {
+    Api.post('/user_token', useraccount)
+      .then(data => data.json())
+      .then(data => {
+        if (data && data.jwt) {
+          SInfo.setItem('jwt', data.jwt, options).then(() => {
+            this.setState({
+              isLoged: true
+            });
+          });
+        } else {
+          this.setState({
+            isLoged: false
+          });
+        }
+      });
+  };
+
+  logout = () => {
+    SInfo.deleteItem('jwt', options);
     this.setState({
-      isLoged: true
+      isLoged: false
     });
-  }
+  };
 
   render() {
     if (this.state.isLoged) {
       return (
-        <InternalStack />
+        <InternalStack screenProps={{ logout: this.logout }} />
       );
     } else {
       return (
-        <ExternalStack screenProps={{ login: this.login}} />
+        <ExternalStack screenProps={{ login: this.login }} />
       );
     }
   }
