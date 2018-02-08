@@ -4,7 +4,7 @@ import Login from '../components/Login';
 const ExternalStack = StackNavigator(
   {
     Login: {
-      screen: Login,
+      screen: Login
     }
   },
   {

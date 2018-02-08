@@ -5,12 +5,11 @@ class Login extends React.Component {
   state = {
     username: '',
     password: '',
-    showLogin: true
   };
 
   login = () => {
     const { username, password } = this.state;
-    this.props.navigation.navigate('Home');
+    this.props.screenProps.login();
   };
 
   render() {
