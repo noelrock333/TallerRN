@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-base": "^2.3.8",
     "react": "16.2.0",
     "react-native": "0.53.0",
     "react-native-sensitive-info": "^5.1.0",

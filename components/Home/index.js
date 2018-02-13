@@ -1,14 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Content, Header, Container, Body, Text } from 'native-base';
+import ImageCard from '../ImageCard';
 
 class Home extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'purple' }}>
-          <Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>
-            Home
-          </Text>
-      </View>
+      <Container>
+        <Header>
+          <Body>
+            <Text>Home</Text>
+          </Body>
+        </Header>
+        <Content>
+          {Array(10).fill(0).map((item, index) => <ImageCard key={index} />)}
+        </Content>
+      </Container>
     );
   }
 }
