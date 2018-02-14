@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, TextInput, Alert } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Login extends React.Component {
   state = {
@@ -15,7 +16,18 @@ class Login extends React.Component {
           "password": "12345678"
       }
     };
-    this.props.screenProps.login(useraccount);
+
+    this.setState({ showSpinner: true });
+    this.props.screenProps.login(useraccount).then(() => {
+      this.setState({ showSpinner: false });
+    })
+    .catch(() => {
+      this.setState({ showSpinner: false }, () => {
+        setTimeout(() => {
+          Alert.alert('Invalid username or password');
+        }, 0);
+      });
+    });
   };
 
   render() {
@@ -33,6 +45,8 @@ class Login extends React.Component {
           onChangeText={text => { this.setState({ password: text })}}
         />
         <Button title="Login" onPress={this.login} />
+
+        <Spinner visible={this.state.showSpinner} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
       </View>
     );
   }

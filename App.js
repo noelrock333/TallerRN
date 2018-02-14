@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
 import SInfo from 'react-native-sensitive-info';
 
 import ExternalStack from './routes/ExternalStack';
@@ -27,7 +26,7 @@ export default class App extends Component {
   };
 
   login = useraccount => {
-    Api.post('/user_token', useraccount)
+    return Api.post('/user_token', useraccount)
       .then(data => data.json())
       .then(data => {
         if (data && data.jwt) {
@@ -63,4 +62,3 @@ export default class App extends Component {
     }
   }
 }
-
