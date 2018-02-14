@@ -45,6 +45,18 @@ class Api {
   static delete(route, params) {
     return this.xhr(route, params, 'DELETE');
   }
+
+  static postImage(params) {
+    const data = new FormData();
+    data.append('title', 'test title'); // you can append anyone.
+    data.append('photo', {
+      uri: require('../assets/avatar.jpg'),
+      type: 'image/jpeg', // or photo.type
+      name: 'testPhotoName'
+    });
+    console.log(data);
+    return this.xhr('/posts', { post: data }, 'POST');
+  }
 }
 
 export default Api;

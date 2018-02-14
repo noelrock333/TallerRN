@@ -21,13 +21,13 @@ class ImageCard extends Component {
         <CardItem>
           <Left>
             <Button transparent>
-              {/* <Icon active name="thumbs-up" /> */}
+              <Icon active name="thumbs-up" />
               <Text>12 Likes</Text>
             </Button>
           </Left>
           <Body>
             <Button transparent>
-              {/* <Icon active name="chatbubbles" /> */}
+              <Icon active name="chatbubbles" />
               <Text>4 Comments</Text>
             </Button>
           </Body>

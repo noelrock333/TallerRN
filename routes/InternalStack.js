@@ -4,6 +4,7 @@ import { DrawerNavigator } from 'react-navigation';
 import Home from '../components/Home';
 import MyProfile from '../components/MyProfile';
 import Drawer from '../components/shared/Drawer';
+import CreatePost from '../components/CreatePost';
 
 const InternalStack = DrawerNavigator(
   {
@@ -13,6 +14,9 @@ const InternalStack = DrawerNavigator(
     MyProfile: {
       screen: MyProfile
     },
+    CreatePost: {
+      screen: CreatePost
+    }
   },
   {
     contentComponent: Drawer
