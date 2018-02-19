@@ -17,7 +17,7 @@ class ImageCard extends Component {
             <Thumbnail source={{ uri: user.profile_url }} />
             <Body>
               <Text>{title}</Text>
-              <Text note>@noelrock333</Text>
+              <Text note>{user.name}</Text>
             </Body>
           </Left>
         </CardItem>
