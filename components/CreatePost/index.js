@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Content, Header, Container, Body, Text, Icon, Right, Left, Button, Item, Input } from 'native-base';
 import Api from '../../utils/api';
 import ImagePicker from 'react-native-image-picker';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 var options = {
   title: 'Selecciona una foto',
@@ -18,7 +19,8 @@ var options = {
 class CreatePost extends React.Component {
   state = {
     avatarSource: null,
-    title: ''
+    title: '',
+    showSpinner: false
   };
 
   pickImage = () => {
@@ -44,10 +46,12 @@ class CreatePost extends React.Component {
   };
 
   uploadFile = () => {
-     Api.postImage({
+    this.setState({ showSpinner: true });
+    Api.postImage({
        photo: this.state.avatarSource,
        title: this.state.title
     }).then(data => {
+      this.setState({ showSpinner: false });
       console.log(data);
     });
   }
@@ -87,6 +91,7 @@ class CreatePost extends React.Component {
               <Text>Publicar</Text>
             </Button>
           }
+          <Spinner visible={this.state.showSpinner} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         </Content>
       </Container>
     );
