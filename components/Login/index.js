@@ -46,7 +46,7 @@ class Login extends React.Component {
         />
         <Button title="Login" onPress={this.login} />
 
-        <Spinner visible={this.state.showSpinner} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        <Spinner visible={this.state.showSpinner} textContent={"Cargando..."} textStyle={{color: '#FFF'}} />
       </View>
     );
   }
