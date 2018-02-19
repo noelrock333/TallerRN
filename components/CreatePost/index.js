@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { Content, Header, Container, Body, Text, Icon, Right, Left } from 'native-base';
+import { Content, Header, Container, Body, Text, Icon, Right, Left, Button, Item, Input } from 'native-base';
 import Api from '../../utils/api';
 import ImagePicker from 'react-native-image-picker';
 
 var options = {
-  title: 'Select Avatar',
-  customButtons: [
-    {name: 'fb', title: 'Choose Photo from Facebook'},
-  ],
+  title: 'Selecciona una foto',
+  takePhotoButtonTitle: 'Tomar una foto',
+  chooseFromLibraryButtonTitle: 'Desde galería',
+  cancelButtonTitle: 'Cancelar',
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -17,7 +17,8 @@ var options = {
 
 class CreatePost extends React.Component {
   state = {
-    avatarSource: null
+    avatarSource: null,
+    title: ''
   };
 
   pickImage = () => {
@@ -69,12 +70,16 @@ class CreatePost extends React.Component {
         </Header>
         <Content>
           <TouchableOpacity onPress={this.pickImage}>
-            <Text>Obtener Imagen</Text>
+            <Image source={avatarSource ? { uri: avatarSource.uri } : require('../../assets/placeholder-camera.png')} style={styles.uploadAvatar} />
           </TouchableOpacity>
-          <Image source={avatarSource ? { uri: avatarSource.uri } : null} style={styles.uploadAvatar} />
-          <TouchableOpacity onPress={this.uploadFile}>
-            <Text>Subir archivo</Text>
-          </TouchableOpacity>
+          <Item rounded style={styles.comment}>
+            <Input placeholder='Agrega un comentario'/>
+          </Item>
+          {avatarSource && 
+            <Button block info onPress={this.uploadFile}>
+              <Text>Publicar</Text>
+            </Button>
+          }
         </Content>
       </Container>
     );
@@ -83,7 +88,12 @@ class CreatePost extends React.Component {
 
 const styles = StyleSheet.create({
   uploadAvatar: {
-    height: 200
+    height: 200,
+    resizeMode: 'repeat'
+  },
+  comment: {
+    marginTop: 10,
+    marginBottom: 5
   }
 });
 
