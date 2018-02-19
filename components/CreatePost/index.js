@@ -53,6 +53,7 @@ class CreatePost extends React.Component {
   }
 
   render() {
+    var { avatarSource } = this.state;
     return (
       <Container>
         <Header>
@@ -70,7 +71,7 @@ class CreatePost extends React.Component {
           <TouchableOpacity onPress={this.pickImage}>
             <Text>Obtener Imagen</Text>
           </TouchableOpacity>
-          <Image source={this.avatarSource || null} style={styles.uploadAvatar} />
+          <Image source={avatarSource ? { uri: avatarSource.uri } : null} style={styles.uploadAvatar} />
           <TouchableOpacity onPress={this.uploadFile}>
             <Text>Subir archivo</Text>
           </TouchableOpacity>
