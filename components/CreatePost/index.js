@@ -20,10 +20,7 @@ class CreatePost extends React.Component {
     avatarSource: null
   };
 
-  uploadFile = () => {
-    // Api.postImage().then(data => {
-    //   console.log(data);
-    // });
+  pickImage = () => {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
     
@@ -37,7 +34,7 @@ class CreatePost extends React.Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        let source = { uri: response.uri };
+        let source = response;
     
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -48,6 +45,12 @@ class CreatePost extends React.Component {
       }
     });
   };
+
+  uploadFile = () => {
+     Api.postImage({ photo: this.state.avatarSource, title: 'Nuevo meme' }).then(data => {
+      console.log(data);
+    });
+  }
 
   render() {
     return (
@@ -64,10 +67,13 @@ class CreatePost extends React.Component {
           <Right />
         </Header>
         <Content>
-          <TouchableOpacity onPress={this.uploadFile}>
+          <TouchableOpacity onPress={this.pickImage}>
             <Text>Obtener Imagen</Text>
           </TouchableOpacity>
-          <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+          <Image source={this.avatarSource || null} style={styles.uploadAvatar} />
+          <TouchableOpacity onPress={this.uploadFile}>
+            <Text>Subir archivo</Text>
+          </TouchableOpacity>
         </Content>
       </Container>
     );
