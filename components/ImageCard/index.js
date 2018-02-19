@@ -9,7 +9,6 @@ class ImageCard extends Component {
 
   render() {
     const { title, photo_url, user, comments } = this.props.data;
-    console.log(this.props.data);
     return (
       <Card>
         <CardItem>
