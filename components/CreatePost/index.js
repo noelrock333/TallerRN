@@ -38,12 +38,11 @@ class CreatePost extends React.Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        // let source = response;
-        ImageResizer.createResizedImage('data:image/jpeg;base64,' + response.data, 300, 300, 'JPEG', 50).then((source) => {
-          // response.uri is the URI of the new image that can now be displayed, uploaded...
-          // response.path is the path of the new image
-          // response.name is the name of the new image with the extension
-          // response.size is the size of the new image
+        ImageResizer.createResizedImage('data:image/jpeg;base64,' + response.data, 400, 400, 'JPEG', 50).then((source) => {
+          // response.uri es la URI de la nueva imagén que puede ser mostrada o subida...
+          // response.path es la ruta de la nueva imagén
+          // response.name es el nombre de la nueva imagén con su extensión
+          // response.size es el tamaño de la nueva imagén 
           this.setState({
             avatarSource: {
               uri: source.uri,
@@ -51,8 +50,8 @@ class CreatePost extends React.Component {
             }
           });
         }).catch((err) => {
-          // Oops, something went wrong. Check that the filename is correct and
-          // inspect err to get more details.
+          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto 
+          // e inspecciona la variable err para obtener más detalles.
           console.log('Resize error', err);
         });
       }
