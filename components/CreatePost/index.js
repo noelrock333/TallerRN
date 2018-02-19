@@ -36,10 +36,6 @@ class CreatePost extends React.Component {
       }
       else {
         let source = response;
-    
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-    
         this.setState({
           avatarSource: source
         });
@@ -48,7 +44,10 @@ class CreatePost extends React.Component {
   };
 
   uploadFile = () => {
-     Api.postImage({ photo: this.state.avatarSource, title: 'Nuevo meme' }).then(data => {
+     Api.postImage({
+       photo: this.state.avatarSource,
+       title: this.state.title
+    }).then(data => {
       console.log(data);
     });
   }
@@ -64,16 +63,24 @@ class CreatePost extends React.Component {
             </TouchableOpacity>
           </Left>  
           <Body>
-            <Text>Nueva publicación</Text>
+            <Text>Publicación</Text>
           </Body>
           <Right />
         </Header>
         <Content>
           <TouchableOpacity onPress={this.pickImage}>
-            <Image source={avatarSource ? { uri: avatarSource.uri } : require('../../assets/placeholder-camera.png')} style={styles.uploadAvatar} />
+            <Image
+              source={avatarSource ?
+                { uri: 'data:image/jpeg;base64,' + avatarSource.data } : require('../../assets/placeholder-camera.png')
+              }
+              style={styles.uploadAvatar}
+            />
           </TouchableOpacity>
           <Item rounded style={styles.comment}>
-            <Input placeholder='Agrega un comentario'/>
+            <Input
+              placeholder='Agrega un comentario'
+              onChangeText={title => this.setState({ title })}
+            />
           </Item>
           {avatarSource && 
             <Button block info onPress={this.uploadFile}>

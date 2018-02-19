@@ -7,7 +7,6 @@ class Api {
       keychainService: 'tallerRN'
     };
     const jwt = await SInfo.getItem('jwt', options);
-    // console.log('jwt', jwt);
     let auth_header = 'Bearer ' + jwt;
     const json_payload = '';
 
@@ -47,41 +46,16 @@ class Api {
   }
 
   static postImage = async function(params) {
-    // const data = new FormData();
-    // data.append('post', {
-    //   title: params.title,
-    //   photo: {
-    //     uri: params.photo.uri,
-    //     type: 'image/jpeg', // or photo.type
-    //     name: params.photo.fileName
-    //   }
-    // })
-    // const data = new FormData();
-    // data.append('image', {
-    //   uri:   this.props.navigation.state.params.data.path,
-    //   type: 'image/jpg',
-    //   name: 'testPhotoName'
-    // });
-    // const data = {
-    //   post: {
-    //     title: params.title,
-    //     photo: {
-    //       uri: 'data:image/jpeg;base64,' + params.photo.data,
-    //       type: 'image/jpeg', // or photo.type
-    //       name: params.photo.fileName
-    //     }
-    //   }
-    // }
     var data = new FormData();
-    data.append('post[title]', params.title); // you can append anyone.
+    data.append('post[title]', params.title); // puedes agregar lo que sea.
     data.append('post[photo]', {
       uri: 'data:image/jpeg;base64,' + params.photo.data,
-      type: 'image/jpeg', // or photo.type
+      type: 'image/jpeg', // o params.photo.type
       name: params.photo.fileName
     });
     console.log('formData', data);
-    // return this.xhr('/posts', data, 'POST');
     const url = 'https://tranquil-garden-30231.herokuapp.com/posts';
+    // Content-Type de tipo multipart (para archivos)
     const headers = await this.headers('multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__\'');
     const options = {
       method: 'POST',
