@@ -1,15 +1,21 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, RefreshControl } from 'react-native';
 import { Content, Header, Container, Body, Text, Icon, Right, Left } from 'native-base';
 import ImageCard from '../ImageCard';
 import Api from '../../utils/api';
 
 class Home extends React.Component {
   state = {
-    posts: []
+    posts: [],
+    refreshing: false
   };
 
   componentDidMount() {
+    this._onRefresh();
+  }
+
+  _onRefresh() {
+    this.setState({ refreshing: true });
     Api.get('/posts')
       .then(data => data.json())
       .then(data => {
@@ -18,6 +24,7 @@ class Home extends React.Component {
             posts: data
           });
         }
+        this.setState({ refreshing: false });
       });
   }
   
@@ -35,7 +42,14 @@ class Home extends React.Component {
             </TouchableOpacity>
           </Right>
         </Header>
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }
+        >
           {this.state.posts.map((item, index) => <ImageCard key={index} data={item} />)}
         </Content>
       </Container>
