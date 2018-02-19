@@ -49,7 +49,7 @@ class Api {
     var data = new FormData();
     data.append('post[title]', params.title); // puedes agregar lo que sea.
     data.append('post[photo]', {
-      uri: 'data:image/jpeg;base64,' + params.photo.data,
+      uri: params.photo.uri,
       type: 'image/jpeg', // o params.photo.type
       name: params.photo.fileName
     });
