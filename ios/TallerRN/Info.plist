@@ -42,6 +42,8 @@
 	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>
@@ -56,6 +58,8 @@
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string></string>
+	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>

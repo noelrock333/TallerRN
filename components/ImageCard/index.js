@@ -4,19 +4,22 @@ import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Ic
 
 class ImageCard extends Component {
   render() {
+    //console.log(this.props.data);
+    const { title, photo_url, user } = this.props.data;
+    console.log(photo_url);
     return (
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={require('../../assets/avatar.jpg')} />
+            <Thumbnail source={{ uri: user.profile_url }} />
             <Body>
-              <Text>Morrito peleandose</Text>
+              <Text>{title}</Text>
               <Text note>@noelrock333</Text>
             </Body>
           </Left>
         </CardItem>
         <CardItem cardBody>
-          <Image source={{uri: 'https://pbs.twimg.com/media/DV31WnJVoAAdJoM.jpg:large'}} style={{height: 200, width: null, flex: 1}}/>
+          <Image source={{ uri: photo_url }} style={{ height: 200, width: null, flex: 1 }}/>
         </CardItem>
         <CardItem>
           <Left>
