@@ -4,6 +4,7 @@ import { Content, Header, Container, Body, Text, Icon, Right, Left, Button, Item
 import Api from '../../utils/api';
 import ImagePicker from 'react-native-image-picker';
 import Spinner from 'react-native-loading-spinner-overlay';
+import ImageResizer from 'react-native-image-resizer';
 
 var options = {
   title: 'Selecciona una foto',
@@ -37,9 +38,21 @@ class CreatePost extends React.Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        let source = response;
-        this.setState({
-          avatarSource: source
+        ImageResizer.createResizedImage('data:image/jpeg;base64,' + response.data, 400, 400, 'JPEG', 50).then((source) => {
+          // response.uri es la URI de la nueva imagén que puede ser mostrada o subida...
+          // response.path es la ruta de la nueva imagén
+          // response.name es el nombre de la nueva imagén con su extensión
+          // response.size es el tamaño de la nueva imagén 
+          this.setState({
+            avatarSource: {
+              uri: source.uri,
+              fileName: source.name
+            }
+          });
+        }).catch((err) => {
+          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto 
+          // e inspecciona la variable err para obtener más detalles.
+          console.log('Resize error', err);
         });
       }
     });
@@ -75,7 +88,7 @@ class CreatePost extends React.Component {
           <TouchableOpacity onPress={this.pickImage}>
             <Image
               source={avatarSource ?
-                { uri: 'data:image/jpeg;base64,' + avatarSource.data } : require('../../assets/placeholder-camera.png')
+                { uri: avatarSource.uri } : require('../../assets/placeholder-camera.png')
               }
               style={styles.uploadAvatar}
             />
@@ -91,7 +104,7 @@ class CreatePost extends React.Component {
               <Text>Publicar</Text>
             </Button>
           }
-          <Spinner visible={this.state.showSpinner} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+          <Spinner visible={this.state.showSpinner} textContent={"Publicando..."} textStyle={{color: '#FFF'}} />
         </Content>
       </Container>
     );
