@@ -3719,6 +3719,10 @@ react-native-loading-spinner-overlay@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.2.tgz#b7bcd277476d596615fd7feee601789f9bdc7acc"
 
+react-native-phone-call@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.4.tgz#809b7dd27452e429c9deddb4c311997702e333ba"
+
 react-native-sensitive-info@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.1.0.tgz#1655c482f99c80023a23b2d9adab1ae260b1988a"
