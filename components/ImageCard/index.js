@@ -10,7 +10,7 @@ import {
   Left,
   Body,
   Right,
-  Spinner,
+  Spinner
 } from 'native-base';
 import Api from '../../utils/api';
 
@@ -27,7 +27,7 @@ class ImageCard extends Component {
       [
         {
           text: 'Eliminar', onPress: () => {
-            Api.delete('/posts/'+id).then(data => {
+            Api.delete('/posts/' + id).then(data => {
               if (data.status == 200) {
                 this.props.removePost(id);
               }
@@ -36,7 +36,7 @@ class ImageCard extends Component {
         },
         {
           text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'
-        },
+        }
       ],
       { cancelable: false }
     );
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0
   }
-})
+});
 
 export default ImageCard;
