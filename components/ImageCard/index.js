@@ -43,7 +43,8 @@ class ImageCard extends Component {
   };
 
   render() {
-    const { title, photo_url, user, comments } = this.props.data;
+    const { title, photo_url, user, comments, id } = this.props.data;
+    const { navigate } = this.props.navigation;
     return (
       <Card>
         <CardItem>
@@ -54,11 +55,6 @@ class ImageCard extends Component {
               <Text note>{user.name}</Text>
             </Body>
           </Left>
-          <Right>
-            <Button transparent onPress={this.deletePost}>
-              <Icon name='ios-trash-outline' />
-            </Button>
-          </Right>
         </CardItem>
         <CardItem cardBody>
           <Image
@@ -75,11 +71,16 @@ class ImageCard extends Component {
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => navigate('Comments', { comments, id })}>
               <Icon active name="chatbubbles" />
               <Text>{comments.length} Comentarios</Text>
             </Button>
           </Left>
+          <Right>
+            <Button transparent onPress={this.deletePost}>
+              <Icon name="ios-trash-outline" style={{ color: 'red' }} />
+            </Button>
+          </Right>
         </CardItem>
       </Card>
     );
