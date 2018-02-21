@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Clipboard
 } from 'react-native';
-import { Container, Content, Button, Header, Icon, Toast } from 'native-base';
+import { Container, Content, Button, Header, Icon, Toast, Left } from 'native-base';
 import call from 'react-native-phone-call';
 
 class MyProfile extends Component {
@@ -27,6 +27,11 @@ class MyProfile extends Component {
       <Container style={styles.container}>
         <Content style={styles.content}>
           <Header style={styles.header} androidStatusBarColor="black">
+            <Left>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+                <Icon name="ios-menu" style={{ color: 'white' }} />
+              </TouchableOpacity>
+            </Left>
           </Header>
           <View
             style={{
@@ -170,7 +175,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 0,
     backgroundColor: '#0076FF',
     borderBottomWidth: 0,
     elevation: 0

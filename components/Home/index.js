@@ -26,13 +26,23 @@ class Home extends React.Component {
         }
         this.setState({ refreshing: false });
       });
-  }
+  };
+
+  removePost = id => {
+    this.setState({
+      posts: this.state.posts.filter(post => post.id != id)
+    });
+  };
   
   render() {
     return (
       <Container>
         <Header>
-          <Left />
+          <Left>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+              <Icon name="ios-menu" />
+            </TouchableOpacity>
+          </Left>
           <Body>
             <Text>Home</Text>
           </Body>
@@ -50,7 +60,7 @@ class Home extends React.Component {
             />
           }
         >
-          {this.state.posts.map((item, index) => <ImageCard key={index} data={item} />)}
+          {this.state.posts.map((item, index) => <ImageCard key={index} data={item} removePost={this.removePost} />)}
         </Content>
       </Container>
     );

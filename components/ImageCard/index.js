@@ -1,10 +1,45 @@
 import React, { Component } from 'react';
-import { Image, View, StyleSheet } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Spinner } from 'native-base';
+import { Image, View, StyleSheet, Alert } from 'react-native';
+import {
+  Card,
+  CardItem,
+  Thumbnail,
+  Text,
+  Button,
+  Icon,
+  Left,
+  Body,
+  Right,
+  Spinner,
+} from 'native-base';
+import Api from '../../utils/api';
 
 class ImageCard extends Component {
   state = {
     loading: true
+  };
+
+  deletePost = () => {
+    const { title, id } = this.props.data;
+    Alert.alert(
+      'Deseas eliminar este post?',
+      title,
+      [
+        {
+          text: 'Eliminar', onPress: () => {
+            Api.delete('/posts/'+id).then(data => {
+              if (data.status == 200) {
+                this.props.removePost(id);
+              }
+            });
+          }
+        },
+        {
+          text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   render() {
@@ -19,6 +54,11 @@ class ImageCard extends Component {
               <Text note>{user.name}</Text>
             </Body>
           </Left>
+          <Right>
+            <Button transparent onPress={this.deletePost}>
+              <Icon name='ios-trash-outline' />
+            </Button>
+          </Right>
         </CardItem>
         <CardItem cardBody>
           <Image

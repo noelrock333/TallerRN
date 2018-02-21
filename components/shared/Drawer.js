@@ -1,22 +1,40 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
 
 class Drawer extends React.Component {
   render() {
     return (
       <View style={{ paddingTop: 20 }}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+        <TouchableHighlight
+          onPress={() => this.props.navigation.navigate('Home')}
+          style={styles.menuItem}
+          underlayColor="#ebebeb"
+        >
           <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyProfile')}>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => this.props.navigation.navigate('MyProfile')}
+          style={styles.menuItem}
+          underlayColor="#ebebeb"
+        >
           <Text>Mi Perfil</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.screenProps.logout()}>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => this.props.screenProps.logout()}
+          style={styles.menuItem}
+          underlayColor="#ebebeb"
+        >
           <Text>Cerrar sesión</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
       </View>
     );
   }
-};
+}
+
+const styles = StyleSheet.create({
+  menuItem: {
+    padding: 7,
+  },
+});
 
 export default Drawer;
