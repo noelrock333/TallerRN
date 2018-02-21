@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -10,7 +10,9 @@ import {
   Text,
   Icon,
   Item,
-  Input
+  Input,
+  List,
+  ListItem
 } from 'native-base';
 import Api from '../../utils/api';
 
@@ -41,9 +43,15 @@ class Comments extends React.Component {
 
   render() {
     const comentarios = this.state.comments.map((item, index) => (
-      <View key={index} style={styles.comment}>
-        <Text>{item.content}</Text>
-      </View>
+      <ListItem key={index}>
+        <Body>
+          <Text>Tía Chole</Text>
+          <Text note>{item.content}</Text>
+        </Body>
+        <Right>
+          <Text note>3:43 pm</Text>
+        </Right>
+      </ListItem>
     ));
 
     return (
@@ -60,8 +68,8 @@ class Comments extends React.Component {
           <Right />
         </Header>
         <Content>
-          {comentarios}
-          <Item rounded>
+          <List>{comentarios}</List>
+          <Item rounded style={styles.inputComment}>
             <Input
               placeholder="Escribe un comentario"
               onChangeText={comment => this.setState({ comment })}
@@ -82,6 +90,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ebebeb'
+  },
+  inputComment: {
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingLeft: 10,
+    paddingRight: 10
   }
 });
 
