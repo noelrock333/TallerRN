@@ -9,6 +9,7 @@ const ExternalStack = StackNavigator(
   },
   {
     initialRouteName: 'Login',
+    headerMode: 'none'
   }
 );
 
