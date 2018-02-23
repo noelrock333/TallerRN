@@ -8,7 +8,7 @@ import {
   Text,
   Icon,
   Right,
-  Left,
+  Left
 } from 'native-base';
 import ImageCard from '../ImageCard';
 import Api from '../../utils/api';
@@ -35,7 +35,7 @@ class Home extends React.Component {
         }
         this.setState({ refreshing: false });
       });
-  };
+  }
 
   removePost = id => {
     this.setState({

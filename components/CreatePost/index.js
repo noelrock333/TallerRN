@@ -11,7 +11,7 @@ import {
   Left,
   Button,
   Item,
-  Input,
+  Input
 } from 'native-base';
 import Api from '../../utils/api';
 import ImagePicker from 'react-native-image-picker';
@@ -26,7 +26,7 @@ var options = {
   storageOptions: {
     skipBackup: true,
     path: 'images'
-  },
+  }
 };
 
 class CreatePost extends React.Component {
@@ -70,13 +70,13 @@ class CreatePost extends React.Component {
   uploadFile = () => {
     this.setState({ showSpinner: true });
     Api.postImage({
-       photo: this.state.avatarSource,
-       title: this.state.title
+      photo: this.state.avatarSource,
+      title: this.state.title
     }).then(data => {
       this.setState({ showSpinner: false });
       console.log(data);
     });
-  }
+  };
 
   render() {
     var { avatarSource } = this.state;
