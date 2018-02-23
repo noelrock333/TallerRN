@@ -1,6 +1,18 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { Content, Header, Container, Body, Text, Icon, Right, Left, Button, Item, Input } from 'native-base';
+import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {
+  Content,
+  Header,
+  Container,
+  Body,
+  Text,
+  Icon,
+  Right,
+  Left,
+  Button,
+  Item,
+  Input,
+} from 'native-base';
 import Api from '../../utils/api';
 import ImagePicker from 'react-native-image-picker';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -14,7 +26,7 @@ var options = {
   storageOptions: {
     skipBackup: true,
     path: 'images'
-  }
+  },
 };
 
 class CreatePost extends React.Component {
@@ -27,17 +39,14 @@ class CreatePost extends React.Component {
   pickImage = () => {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
-    
+
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
+      } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
+      } else {
         ImageResizer.createResizedImage('data:image/jpeg;base64,' + response.data, 400, 400, 'JPEG', 50).then((source) => {
           // response.uri es la URI de la nueva imagén que puede ser mostrada o subida...
           // response.path es la ruta de la nueva imagén
@@ -78,7 +87,7 @@ class CreatePost extends React.Component {
             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <Icon name="arrow-back" />
             </TouchableOpacity>
-          </Left>  
+          </Left>
           <Body>
             <Text>Publicación</Text>
           </Body>
@@ -95,7 +104,7 @@ class CreatePost extends React.Component {
           </TouchableOpacity>
           <Item rounded style={styles.comment}>
             <Input
-              placeholder='Agrega un comentario'
+              placeholder="Agrega un comentario"
               onChangeText={title => this.setState({ title })}
             />
           </Item>
@@ -104,7 +113,11 @@ class CreatePost extends React.Component {
               <Text>Publicar</Text>
             </Button>
           }
-          <Spinner visible={this.state.showSpinner} textContent={"Publicando..."} textStyle={{color: '#FFF'}} />
+          <Spinner
+            visible={this.state.showSpinner}
+            textContent={'Publicando...'}
+            textStyle={{ color: '#FFF' }}
+          />
         </Content>
       </Container>
     );

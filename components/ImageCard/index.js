@@ -10,7 +10,7 @@ import {
   Left,
   Body,
   Right,
-  Spinner,
+  Spinner
 } from 'native-base';
 import Api from '../../utils/api';
 
@@ -27,7 +27,7 @@ class ImageCard extends Component {
       [
         {
           text: 'Eliminar', onPress: () => {
-            Api.delete('/posts/'+id).then(data => {
+            Api.delete('/posts/' + id).then(data => {
               if (data.status == 200) {
                 this.props.removePost(id);
               }
@@ -36,14 +36,15 @@ class ImageCard extends Component {
         },
         {
           text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'
-        },
+        }
       ],
       { cancelable: false }
     );
   };
 
   render() {
-    const { title, photo_url, user, comments } = this.props.data;
+    const { title, photo_url, user, comments, id } = this.props.data;
+    const { navigate } = this.props.navigation;
     return (
       <Card>
         <CardItem>
@@ -54,11 +55,6 @@ class ImageCard extends Component {
               <Text note>{user.name}</Text>
             </Body>
           </Left>
-          <Right>
-            <Button transparent onPress={this.deletePost}>
-              <Icon name='ios-trash-outline' />
-            </Button>
-          </Right>
         </CardItem>
         <CardItem cardBody>
           <Image
@@ -75,11 +71,16 @@ class ImageCard extends Component {
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => navigate('Comments', { comments, id })}>
               <Icon active name="chatbubbles" />
               <Text>{comments.length} Comentarios</Text>
             </Button>
           </Left>
+          <Right>
+            <Button transparent onPress={this.deletePost}>
+              <Icon name="ios-trash-outline" style={{ color: 'red' }} />
+            </Button>
+          </Right>
         </CardItem>
       </Card>
     );
@@ -97,6 +98,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0
   }
-})
+});
 
 export default ImageCard;

@@ -8,11 +8,10 @@ class Api {
     };
     const jwt = await SInfo.getItem('jwt', options);
     let auth_header = 'Bearer ' + jwt;
-    const json_payload = '';
 
     return {
-      'Authorization': auth_header,
-      'Content-Type': contentType || 'application/json',
+      Authorization: auth_header,
+      'Content-Type': contentType || 'application/json'
     };
   };
 

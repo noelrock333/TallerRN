@@ -5,6 +5,7 @@ import Home from '../components/Home';
 import MyProfile from '../components/MyProfile';
 import Drawer from '../components/shared/Drawer';
 import CreatePost from '../components/CreatePost';
+import Comments from '../components/Comments';
 
 const InternalStack = DrawerNavigator(
   {
@@ -13,6 +14,9 @@ const InternalStack = DrawerNavigator(
     },
     MyProfile: {
       screen: MyProfile
+    },
+    Comments: {
+      screen: Comments
     },
     CreatePost: {
       screen: CreatePost

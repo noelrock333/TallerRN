@@ -1,6 +1,15 @@
 import React from 'react';
-import { View, TouchableOpacity, RefreshControl } from 'react-native';
-import { Content, Header, Container, Body, Text, Icon, Right, Left } from 'native-base';
+import { TouchableOpacity, RefreshControl } from 'react-native';
+import {
+  Content,
+  Header,
+  Container,
+  Body,
+  Text,
+  Icon,
+  Right,
+  Left,
+} from 'native-base';
 import ImageCard from '../ImageCard';
 import Api from '../../utils/api';
 
@@ -33,7 +42,7 @@ class Home extends React.Component {
       posts: this.state.posts.filter(post => post.id != id)
     });
   };
-  
+
   render() {
     return (
       <Container>
@@ -60,7 +69,14 @@ class Home extends React.Component {
             />
           }
         >
-          {this.state.posts.map((item, index) => <ImageCard key={index} data={item} removePost={this.removePost} />)}
+          {this.state.posts.map((item, index) => (
+            <ImageCard
+              key={index}
+              data={item}
+              removePost={this.removePost}
+              navigation={this.props.navigation}
+            />
+          ))}
         </Content>
       </Container>
     );
