@@ -4,42 +4,37 @@ import {
   Text,
   Button,
   TextInput,
-  Alert,
   StyleSheet,
-  ImageBackground,
-  TouchableOpacity
+  ImageBackground
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Api from '../../utils/api';
 
-class Login extends React.Component {
+class SignIn extends React.Component {
   state = {
+    showSpinner: false,
+    name: '',
     email: '',
     password: '',
-    showSpinner: false
+    password_confirmation: ''
   };
 
-  login = () => {
-    // const { username, password } = this.state;
-    const useraccount = {
-      auth: {
-        email: 'noel@michelada.io',
-        password: '12345678'
-      }
-    };
-
+  signin = () => {
     this.setState({ showSpinner: true });
-    this.props.screenProps
-      .login(useraccount)
-      .then(() => {
-        this.setState({ showSpinner: false });
-      })
-      .catch(() => {
-        this.setState({ showSpinner: false }, () => {
-          setTimeout(() => {
-            Alert.alert('Usuario o password invalido');
-          }, 0);
-        });
-      });
+    const { name, email, password, password_confirmation } = this.state;
+    Api.post('/users', {
+      user: {
+        name,
+        email,
+        password,
+        password_confirmation
+      }
+    }).then(data => {
+      this.setState({ showSpinner: false });
+      if (data.status == 200) {
+        this.props.navigation.navigate('Login');
+      }
+    });
   };
 
   render() {
@@ -53,26 +48,33 @@ class Login extends React.Component {
         </ImageBackground>
         <View style={styles.loginForm}>
           <TextInput
+            style={styles.textInput}
+            placeholder="Tu nombre"
+            autoCorrect={false}
+            onChangeText={text => this.setState({ name: text })}
+          />
+          <TextInput
             style={[styles.textInput, { marginBottom: 10 }]}
             placeholder="Correo eléctronico"
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
             onChangeText={text => this.setState({ email: text })}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Contraseña"
+            secureTextEntry={true}
+            onChangeText={text => this.setState({ password: text })}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Confirma tu contraseña"
             secureTextEntry={true}
-            onChangeText={text => this.setState({ password: text })}
+            onChangeText={text => this.setState({ password_confirmation: text })}
           />
           <View style={styles.loginButtonWrapper}>
-            <Button title="Iniciar sesión" onPress={this.login} />
-          </View>
-          <View style={styles.forgotLabel}>
-            <Text style={{ color: 'gray', marginRight: 5 }}>
-              No tienes cuenta?
-            </Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
-              <Text style={{ color: '#2F9BEF' }}>Obten una aquí</Text>
-            </TouchableOpacity>
+            <Button title="Registrarme" onPress={this.signin} />
           </View>
         </View>
 
@@ -110,7 +112,8 @@ const styles = StyleSheet.create({
     padding: 14,
     borderColor: '#ebebeb',
     borderWidth: 1,
-    borderRadius: 7
+    borderRadius: 7,
+    marginBottom: 10
   },
   loginButtonWrapper: {
     marginTop: 10,
@@ -123,4 +126,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+export default SignIn;
