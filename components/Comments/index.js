@@ -12,18 +12,30 @@ import {
   Item,
   Input,
   List,
-  ListItem
+  ListItem,
+  Thumbnail
 } from 'native-base';
 import Api from '../../utils/api';
 
 class Comments extends React.Component {
   constructor(props) {
     super(props);
-    const { comments, id } = this.props.navigation.state.params;
+    const { id } = this.props.navigation.state.params;
     this.state = {
-      comments: comments,
+      comments: [],
       id: id
     };
+  }
+
+  componentDidMount() {
+    const { id } = this.props.navigation.state.params;
+    Api.get(`/posts/${id}/comments/`)
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          comments: data
+        });
+      });
   }
 
   postComment = () => {
@@ -43,9 +55,12 @@ class Comments extends React.Component {
 
   render() {
     const comentarios = this.state.comments.map((item, index) => (
-      <ListItem key={index}>
+      <ListItem avatar key={index}>
+        <Left>
+          <Thumbnail small source={{ uri: item.user.profile_url }} />
+        </Left>
         <Body>
-          <Text>Tía Chole</Text>
+          <Text>{item.user.name}</Text>
           <Text note>{item.content}</Text>
         </Body>
         <Right>
