@@ -55,6 +55,9 @@ class Login extends React.Component {
           <TextInput
             style={[styles.textInput, { marginBottom: 10 }]}
             placeholder="Correo eléctronico"
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
             onChangeText={text => this.setState({ email: text })}
           />
           <TextInput

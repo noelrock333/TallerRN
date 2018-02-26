@@ -127,7 +127,8 @@ class CreatePost extends React.Component {
 const styles = StyleSheet.create({
   uploadAvatar: {
     height: 200,
-    resizeMode: 'repeat'
+    flex: 1,
+    width: null
   },
   comment: {
     marginTop: 10,
