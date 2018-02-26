@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
-  View,
+  Container,
+  Content,
+  Button,
+  Header,
+  Icon,
+  Left,
+  Thumbnail,
   Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Clipboard
-} from 'react-native';
-import { Container, Content, Button, Header, Icon, Toast, Left } from 'native-base';
+  Body,
+  Right
+} from 'native-base';
 import call from 'react-native-phone-call';
+import Api from '../../utils/api';
 
 class MyProfile extends Component {
   state = {
-    showToast: false
+    showToast: false,
+    user: {
+      email: '',
+      profile_url: '',
+      name: ''
+    }
   };
+
+  componentDidMount() {
+    Api.get('/users/me')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          user: data
+        });
+      });
+  }
 
   callSupport = () => {
     call({
@@ -23,6 +43,7 @@ class MyProfile extends Component {
   };
 
   render() {
+    const { name, profile_url, email } = this.state.user;
     return (
       <Container style={styles.container}>
         <Content style={styles.content}>
@@ -32,37 +53,16 @@ class MyProfile extends Component {
                 <Icon name="ios-menu" style={{ color: 'white' }} />
               </TouchableOpacity>
             </Left>
+            <Body />
+            <Right />
           </Header>
-          <View
-            style={{
-              backgroundColor: '#0076FF',
-              alignItems: 'center',
-              paddingBottom: 80
-            }}
-          >
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 18,
-                fontWeight: '600',
-                marginTop: 20,
-                marginBottom: 30
-              }}
-            >
-              Perfil de usuario
-            </Text>
-            <Text
-              style={{
-                paddingLeft: 35,
-                paddingRight: 35,
-                fontSize: 16,
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '600'
-              }}
-            >
-              En este apartado puede ir una breve descripción proporcionada
-              por el usuario, puede listar cosas como sus hobbies y algunas
+          <View style={styles.main}>
+            <Text style={styles.title}>Perfil de usuario</Text>
+            {!!profile_url && <Thumbnail source={{ uri: profile_url }} />}
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.description}>
+              En este apartado puede ir una breve descripción proporcionada por
+              el usuario, puede listar cosas como sus hobbies y algunas
               curiosidades que le puedan parecer interesantes.
             </Text>
           </View>
@@ -70,32 +70,15 @@ class MyProfile extends Component {
             <View
               style={[styles.details, { paddingTop: 10, paddingBottom: 10 }]}
             >
-              <View
-                style={[
-                  styles.detailsItem,
-                  {
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingLeft: 20,
-                    paddingRight: 20
-                  }
-                ]}
-              >
-                <Text>La vida es algo mágico, vive cada momento como si fuera el último.</Text>
+              <View style={styles.detailsItem}>
+                <Text>
+                  La vida es algo mágico, vive cada momento como si fuera el
+                  último.
+                </Text>
               </View>
             </View>
           </View>
-          <Text
-            style={{
-              marginTop: 20,
-              marginBottom: 10,
-              paddingLeft: 20,
-              paddingRight: 20,
-              color: '#5B727C',
-              fontSize: 13,
-              lineHeight: 20
-            }}
-          >
+          <Text style={styles.contact}>
             Si deseas contactar a este usuario necesitas enviar una solicitud de amistad
           </Text>
           <View
@@ -110,26 +93,10 @@ class MyProfile extends Component {
             ]}
           >
             <View style={{ alignItems: 'center' }}>
-              <Text
-                style={{
-                  fontSize: 13,
-                  width: '100%',
-                  color: '#5B727C',
-                  textAlign: 'center'
-                }}
-              >
+              <Text style={styles.issue}>
                 Si tienes algún problema con tu perfil puedes llamar al{' '}
               </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 17,
-                  color: '#5B727C',
-                  lineHeight: 23
-                }}
-              >
-                3120000000
-              </Text>
+              <Text style={styles.phonenumber}>3120000000</Text>
             </View>
             <View
               style={[
@@ -137,32 +104,14 @@ class MyProfile extends Component {
                 { flexDirection: 'row', paddingBottom: 20, marginTop: 20 }
               ]}
             >
-              <Button
-                style={{
-                  backgroundColor: 'white',
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  flex: 1
-                }}
-                onPress={this.callSupport}
-              >
-                <Text
-                  style={{
-                    color: '#4A90E2',
-                    textAlign: 'center',
-                    fontSize: 18,
-                    width: '100%',
-                    fontWeight: '600'
-                  }}
-                >
-                  Llamar 3120000000
-                </Text>
+              <Button style={styles.calltoButton} onPress={this.callSupport}>
+                <Text style={styles.callto}>Llamar 3120000000</Text>
               </Button>
             </View>
             <Text
               style={{ width: '100%', textAlign: 'center', color: '#0076FF' }}
             >
-              noel@michelada.com
+              {email}
             </Text>
           </View>
         </Content>
@@ -172,6 +121,11 @@ class MyProfile extends Component {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    backgroundColor: '#0076FF',
+    alignItems: 'center',
+    paddingBottom: 80
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -184,6 +138,13 @@ const styles = StyleSheet.create({
   },
   content: {
     backgroundColor: '#F2F5F7'
+  },
+  title: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 20,
+    marginBottom: 30
   },
   detailsWrapper: {
     paddingLeft: 20,
@@ -198,8 +159,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     alignItems: 'center',
-    paddingLeft: 14,
-    paddingRight: 14
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20
   },
   clipboardWrapper: {
     backgroundColor: '#F2F5F7',
@@ -208,6 +170,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 2
+  },
+  description: {
+    paddingLeft: 35,
+    paddingRight: 35,
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: '600'
+  },
+  contact: {
+    marginTop: 20,
+    marginBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    color: '#5B727C',
+    fontSize: 13,
+    lineHeight: 20
+  },
+  issue: {
+    fontSize: 13,
+    width: '100%',
+    color: '#5B727C',
+    textAlign: 'center'
+  },
+  phonenumber: {
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: '#5B727C',
+    lineHeight: 23
+  },
+  callto: {
+    color: '#4A90E2',
+    textAlign: 'center',
+    fontSize: 18,
+    width: '100%',
+    fontWeight: '600'
+  },
+  calltoButton: {
+    backgroundColor: 'white',
+    paddingLeft: 20,
+    paddingRight: 20,
+    flex: 1
   }
 });
 
