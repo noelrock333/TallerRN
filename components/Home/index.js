@@ -10,7 +10,7 @@ import {
   Right,
   Left
 } from 'native-base';
-import ImageCard from '../ImageCard';
+import NewsFeed from './NewsFeed';
 import Api from '../../utils/api';
 
 class Home extends React.Component {
@@ -69,14 +69,13 @@ class Home extends React.Component {
             />
           }
         >
-          {this.state.posts.map((item, index) => (
-            <ImageCard
-              key={index}
-              data={item}
+          {this.state.posts.length > 0 &&
+            <NewsFeed
+              posts={this.state.posts}
               removePost={this.removePost}
               navigation={this.props.navigation}
             />
-          ))}
+          }
         </Content>
       </Container>
     );
