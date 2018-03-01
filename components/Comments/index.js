@@ -43,13 +43,13 @@ class Comments extends React.Component {
       content: this.state.comment
     };
 
-    Api.post(`/posts/${this.state.id}/comments`, { comment }).then(data => {
-      if (data.status == 200) {
-        this.setState({
-          comments: [...this.state.comments, comment],
-          comment: ''
-        });
-      }
+    Api.post(`/posts/${this.state.id}/comments`, { comment })
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        comments: [...this.state.comments, data],
+        comment: ''
+      });
     });
   };
 
