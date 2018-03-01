@@ -31,7 +31,7 @@ var options = {
 
 class CreatePost extends React.Component {
   state = {
-    avatarSource: null,
+    imageSource: null,
     title: '',
     showSpinner: false
   };
@@ -53,7 +53,7 @@ class CreatePost extends React.Component {
           // response.name es el nombre de la nueva imagén con su extensión
           // response.size es el tamaño de la nueva imagén
           this.setState({
-            avatarSource: {
+            imageSource: {
               uri: source.uri,
               fileName: source.name
             }
@@ -70,7 +70,7 @@ class CreatePost extends React.Component {
   uploadFile = () => {
     this.setState({ showSpinner: true });
     Api.postImage({
-      photo: this.state.avatarSource,
+      photo: this.state.imageSource,
       title: this.state.title
     }).then(data => {
       this.setState({ showSpinner: false });
@@ -80,7 +80,7 @@ class CreatePost extends React.Component {
   };
 
   render() {
-    var { avatarSource } = this.state;
+    var { imageSource } = this.state;
     return (
       <Container>
         <Header>
@@ -97,8 +97,10 @@ class CreatePost extends React.Component {
         <Content>
           <TouchableOpacity onPress={this.pickImage}>
             <Image
-              source={avatarSource ?
-                { uri: avatarSource.uri } : require('../../assets/placeholder-camera.png')
+              source={
+                imageSource
+                  ? { uri: imageSource.uri }
+                  : require('../../assets/placeholder-camera.png')
               }
               style={styles.uploadAvatar}
             />
@@ -109,7 +111,7 @@ class CreatePost extends React.Component {
               onChangeText={title => this.setState({ title })}
             />
           </Item>
-          {avatarSource &&
+          {imageSource &&
             <Button block info onPress={this.uploadFile}>
               <Text>Publicar</Text>
             </Button>
