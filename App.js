@@ -19,12 +19,12 @@ export default class App extends Component {
 
   componentDidMount() {
     const jwt = SInfo.getItem('jwt', options).then(value => {
-      console.log(value);
+      // console.log(value);
       this.setState({
         isLoged: value ? true : false
       });
     });
-  };
+  }
 
   login = useraccount => {
     return Api.post('/user_token', useraccount)
@@ -53,17 +53,11 @@ export default class App extends Component {
 
   render() {
     if (this.state.isLoged) {
-      return (
-        <InternalStack screenProps={{ logout: this.logout }} />
-      );
-    } else if(this.state.isLoged == undefined) {
-      return (
-        <View />
-      );
+      return <InternalStack screenProps={{ logout: this.logout }} />;
+    } else if (this.state.isLoged == undefined) {
+      return <View />;
     } else {
-      return (
-        <ExternalStack screenProps={{ login: this.login }} />
-      );
+      return <ExternalStack screenProps={{ login: this.login }} />;
     }
   }
 }
