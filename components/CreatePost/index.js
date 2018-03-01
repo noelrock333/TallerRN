@@ -31,7 +31,7 @@ var options = {
 
 class CreatePost extends React.Component {
   state = {
-    avatarSource: null,
+    imageSource: null,
     title: '',
     showSpinner: false
   };
@@ -51,15 +51,15 @@ class CreatePost extends React.Component {
           // response.uri es la URI de la nueva imagén que puede ser mostrada o subida...
           // response.path es la ruta de la nueva imagén
           // response.name es el nombre de la nueva imagén con su extensión
-          // response.size es el tamaño de la nueva imagén 
+          // response.size es el tamaño de la nueva imagén
           this.setState({
-            avatarSource: {
+            imageSource: {
               uri: source.uri,
               fileName: source.name
             }
           });
         }).catch((err) => {
-          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto 
+          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto
           // e inspecciona la variable err para obtener más detalles.
           console.log('Resize error', err);
         });
@@ -70,16 +70,17 @@ class CreatePost extends React.Component {
   uploadFile = () => {
     this.setState({ showSpinner: true });
     Api.postImage({
-      photo: this.state.avatarSource,
+      photo: this.state.imageSource,
       title: this.state.title
     }).then(data => {
       this.setState({ showSpinner: false });
+      this.props.navigation.goBack();
       console.log(data);
     });
   };
 
   render() {
-    var { avatarSource } = this.state;
+    var { imageSource } = this.state;
     return (
       <Container>
         <Header>
@@ -96,8 +97,10 @@ class CreatePost extends React.Component {
         <Content>
           <TouchableOpacity onPress={this.pickImage}>
             <Image
-              source={avatarSource ?
-                { uri: avatarSource.uri } : require('../../assets/placeholder-camera.png')
+              source={
+                imageSource
+                  ? { uri: imageSource.uri }
+                  : require('../../assets/placeholder-camera.png')
               }
               style={styles.uploadAvatar}
             />
@@ -108,7 +111,7 @@ class CreatePost extends React.Component {
               onChangeText={title => this.setState({ title })}
             />
           </Item>
-          {avatarSource && 
+          {imageSource &&
             <Button block info onPress={this.uploadFile}>
               <Text>Publicar</Text>
             </Button>
