@@ -51,7 +51,7 @@ class CreatePost extends React.Component {
           // response.uri es la URI de la nueva imagén que puede ser mostrada o subida...
           // response.path es la ruta de la nueva imagén
           // response.name es el nombre de la nueva imagén con su extensión
-          // response.size es el tamaño de la nueva imagén 
+          // response.size es el tamaño de la nueva imagén
           this.setState({
             avatarSource: {
               uri: source.uri,
@@ -59,7 +59,7 @@ class CreatePost extends React.Component {
             }
           });
         }).catch((err) => {
-          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto 
+          // Oops, algo salió mal. Revisa que el nombre del archivo sea correcto
           // e inspecciona la variable err para obtener más detalles.
           console.log('Resize error', err);
         });
@@ -74,6 +74,7 @@ class CreatePost extends React.Component {
       title: this.state.title
     }).then(data => {
       this.setState({ showSpinner: false });
+      this.props.navigation.goBack();
       console.log(data);
     });
   };
@@ -108,7 +109,7 @@ class CreatePost extends React.Component {
               onChangeText={title => this.setState({ title })}
             />
           </Item>
-          {avatarSource && 
+          {avatarSource &&
             <Button block info onPress={this.uploadFile}>
               <Text>Publicar</Text>
             </Button>
