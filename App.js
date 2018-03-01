@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import SInfo from 'react-native-sensitive-info';
 
 import ExternalStack from './routes/ExternalStack';
@@ -13,7 +14,7 @@ const options = {
 
 export default class App extends Component {
   state = {
-    isLoged: false
+    isLoged: undefined
   };
 
   componentDidMount() {
@@ -54,6 +55,10 @@ export default class App extends Component {
     if (this.state.isLoged) {
       return (
         <InternalStack screenProps={{ logout: this.logout }} />
+      );
+    } else if(this.state.isLoged == undefined) {
+      return (
+        <View />
       );
     } else {
       return (
