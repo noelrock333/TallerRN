@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import SInfo from 'react-native-sensitive-info';
 
 import ExternalStack from './routes/ExternalStack';
@@ -13,17 +14,17 @@ const options = {
 
 export default class App extends Component {
   state = {
-    isLoged: false
+    isLoged: undefined
   };
 
   componentDidMount() {
     const jwt = SInfo.getItem('jwt', options).then(value => {
-      console.log(value);
+      // console.log(value);
       this.setState({
         isLoged: value ? true : false
       });
     });
-  };
+  }
 
   login = useraccount => {
     return Api.post('/user_token', useraccount)
@@ -52,13 +53,11 @@ export default class App extends Component {
 
   render() {
     if (this.state.isLoged) {
-      return (
-        <InternalStack screenProps={{ logout: this.logout }} />
-      );
+      return <InternalStack screenProps={{ logout: this.logout }} />;
+    } else if (this.state.isLoged == undefined) {
+      return <View />;
     } else {
-      return (
-        <ExternalStack screenProps={{ login: this.login }} />
-      );
+      return <ExternalStack screenProps={{ login: this.login }} />;
     }
   }
 }
