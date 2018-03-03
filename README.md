@@ -41,7 +41,7 @@ react-native run-android
 3. Sube tus cambios (git push origin my-new-feature)
 4. Crea un nuevo pull request
 
-# Licensia
+# Licencia
 The MIT License (MIT)
 
 Copyright (c)
