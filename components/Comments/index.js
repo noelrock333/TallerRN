@@ -45,9 +45,11 @@ class Comments extends React.Component {
 
     Api.post(`/posts/${this.state.id}/comments`, { comment }).then(data => {
       if (data.status == 200) {
-        this.setState({
-          comments: [...this.state.comments, comment],
-          comment: ''
+        return data.json().then(comment => {
+          this.setState({
+            comments: [...this.state.comments, comment],
+            comment: ''
+          });
         });
       }
     });
@@ -57,10 +59,10 @@ class Comments extends React.Component {
     const comentarios = this.state.comments.map((item, index) => (
       <ListItem avatar key={index}>
         <Left>
-          <Thumbnail small source={{ uri: item.user.profile_url }} />
+          <Thumbnail small source={{ uri: item.user ? item.user.profile_url : '' }} />
         </Left>
         <Body>
-          <Text>{item.user.name}</Text>
+          <Text>{item.user ? item.user.name : ''}</Text>
           <Text note>{item.content}</Text>
         </Body>
         <Right>

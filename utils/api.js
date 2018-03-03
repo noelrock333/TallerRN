@@ -45,7 +45,7 @@ class Api {
   }
 
   static postImage = async function(params) {
-    var data = new FormData();
+    const data = new FormData();
     data.append('post[title]', params.title); // puedes agregar lo que sea.
     data.append('post[photo]', {
       uri: params.photo.uri,
